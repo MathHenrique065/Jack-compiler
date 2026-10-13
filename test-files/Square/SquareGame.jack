@@ -1,0 +1,72 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/10/Square/SquareGame.jack
+
+/**
+ * Implements the Square Dance game.
+ * This game allows the user to move a black square around the screen,
+ * and change its size using the keyboard arrow keys and the Z/X keys.
+ */
+class SquareGame {
+   // The square of this game
+   field Square square;
+
+   // The square's current direction: 
+   // 0=none, 1=up, 2=down, 3=left, 4=right
+   field int direction;
+
+   /** Constructs a new Square Game. */
+   constructor SquareGame new() {
+      let square = Square.new(0, 0, 30);
+      let direction = 0;
+      return this;
+   }
+
+   /** Deallocates the object's memory. */
+   method void dispose() {
+      do square.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Moves the square in the current direction. */
+   method void moveSquare() {
+      if (direction = 1) { do square.moveUp(); }
+      if (direction = 2) { do square.moveDown(); }
+      if (direction = 3) { do square.moveLeft(); }
+      if (direction = 4) { do square.moveRight(); }
+      do Sys.wait(5); // Delays the execution
+      return;
+   }
+
+   /** Runs the game: handles user inputs and moves the square accordingly. */
+   method void run() {
+      var char key;
+      var boolean exit;
+      let exit = false;
+      
+      while (~exit) {
+         // Waits for a key to be pressed
+         while (key = 0) {
+            let key = Keyboard.keyPressed();
+            do moveSquare();
+         }
+
+         if (key = 81)  { let exit = true; }     // q key
+         if (key = 90)  { do square.decSize(); } // z key
+         if (key = 88)  { do square.incSize(); } // x key
+         if (key = 131) { let direction = 1; }   // Up arrow
+         if (key = 133) { let direction = 2; }   // Down arrow
+         if (key = 130) { let direction = 3; }   // Left arrow
+         if (key = 132) { let direction = 4; }   // Right arrow
+
+         // Waits for the key to be released
+         while (~(key = 0)) {
+            let key = Keyboard.keyPressed();
+            do moveSquare();
+         }
+     }
+     return;
+   }
+}

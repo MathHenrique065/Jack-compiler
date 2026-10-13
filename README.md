@@ -1,1 +1,127 @@
-# compiladores-analisador-lexico
+# Analisador Léxico da Linguagem Jack (Nand2Tetris - Projeto 10)
+
+Implementação completa em **Java** do analisador léxico (*scanner / tokenizer*) para a linguagem **Jack**, especificada no Capítulo 10 do livro *The Elements of Computing Systems* (Nand2Tetris).
+
+---
+
+## 📁 Estrutura do Projeto
+
+```text
+c:\Projects\jack-compiler-lexical\
+├── src/
+│   ├── main/java/nand2tetris/lexer/
+│   │   ├── TokenType.java         # Enum com os 5 tipos de tokens do Jack
+│   │   ├── Token.java             # Modelo de token individual com serialização XML
+│   │   ├── JackTokenizer.java     # Motor de análise léxica (API padrão Nand2Tetris)
+│   │   ├── TokenXmlWriter.java    # Escritor e formatador do arquivo de saída *T.xml
+│   │   ├── JackAnalyzer.java      # Ponto de entrada CLI (analisa arquivo ou pasta)
+│   │   └── LexerValidator.java    # Validador automático independente
+│   └── test/java/nand2tetris/lexer/
+│       └── JackTokenizerTest.java # Suíte de testes unitários (JUnit 5)
+│
+├── test-files/                    # Arquivos de teste oficiais do Nand2Tetris
+│   ├── ArrayTest/
+│   │   ├── Main.jack
+│   │   └── MainT.xml              # Gabarito oficial de tokens
+│   └── Square/
+│       ├── Main.jack
+│       ├── MainT.xml
+│       ├── Square.jack
+│       ├── SquareT.xml
+│       ├── SquareGame.jack
+│       └── SquareGameT.xml
+│
+├── build.bat                      # Script rápido para compilar (sem precisar de Maven)
+├── run.bat                        # Script rápido para executar o analisador
+├── test.bat                       # Script rápido para executar a validação de testes
+├── pom.xml                        # Configuração padrão do Maven
+└── README.md
+```
+
+---
+
+## 🎯 Elementos Léxicos da Linguagem Jack
+
+O analisador processa o código `.jack`, elimina comentários e espaços em branco, e classifica cada token em uma de 5 categorias:
+
+1. **`keyword`**: As 21 palavras-chave reservadas:  
+   `class`, `constructor`, `function`, `method`, `field`, `static`, `var`, `int`, `char`, `boolean`, `void`, `true`, `false`, `null`, `this`, `let`, `do`, `if`, `else`, `while`, `return`.
+2. **`symbol`**: Os 19 símbolos e operadores:  
+   `{`, `}`, `(`, `)`, `[`, `]`, `.`, `,`, `;`, `+`, `-`, `*`, `/`, `&`, `|`, `<`, `>`, `=`, `~`.  
+   *Nota: na saída XML, os caracteres reservados `<` (`&lt;`), `>` (`&gt;`), `"` (`&quot;`) e `&` (`&amp;`) são devidamente escapados.*
+3. **`integerConstant`**: Números decimais no intervalo de `0` a `32767`.
+4. **`stringConstant`**: Cadeia de caracteres delimitada por aspas duplas `"..."` (sem as aspas no XML final).
+5. **`identifier`**: Nomes de variáveis, classes e sub-rotinas (iniciando com letra ou `_`, seguidos por letras, dígitos ou `_`).
+
+### Tratamento de Comentários e Ruídos:
+* Comentários de linha única: `// comentário até o fim da linha`
+* Comentários de bloco: `/* comentário */`
+* Comentários de documentação (Javadoc): `/** comentário de API */`
+* O operador de divisão `/` é corretamente diferenciado de inícios de comentários (`//` ou `/*`).
+
+---
+
+## 🚀 Como Executar
+
+### Opção 1: Usando os Scripts Batch (Mais rápido, apenas requer JDK 17+)
+
+No terminal (Prompt de Comando `cmd.exe`):
+
+1. **Compilar o projeto:**
+   ```cmd
+   build.bat
+   ```
+
+2. **Executar a validação automática contra os gabaritos oficiais:**
+   ```cmd
+   test.bat
+   ```
+
+3. **Analisar um arquivo ou diretório `.jack` qualquer:**
+   ```cmd
+   run.bat test-files\Square
+   ```
+   *Ou um arquivo específico:*
+   ```cmd
+   run.bat test-files\ArrayTest\Main.jack
+   ```
+
+---
+
+### Opção 2: Usando o Maven
+
+```cmd
+mvn compile
+mvn test
+mvn package
+```
+
+Para rodar o JAR gerado:
+```cmd
+java -jar target/jack-compiler-lexical-1.0.0.jar test-files/Square
+```
+
+---
+
+### Opção 3: Usando `javac` e `java` diretamente
+
+```cmd
+javac -encoding UTF-8 -d target/classes src/main/java/nand2tetris/lexer/*.java
+java -Dfile.encoding=UTF-8 -cp target/classes nand2tetris.lexer.LexerValidator
+java -Dfile.encoding=UTF-8 -cp target/classes nand2tetris.lexer.JackAnalyzer test-files/Square
+```
+
+---
+
+## ⚠️ Nota Técnica sobre o PowerShell no seu Windows
+
+Caso o PowerShell (`pwsh`) apresente um erro de inicialização do tipo:
+`PSInvalidCastException: Cannot convert value "...python.exe" to type "System.UInt32" at SystemPolicy.GetDebugLockdownPolicy`,
+isso ocorre porque uma variável de ambiente chamada `__PSLockdownPolicy` foi incorretamente definida no Windows com o caminho do executável do Python em vez de um número (`0` ou `4`).
+
+**Como corrigir em 20 segundos:**
+1. Pressione `Win + R`, digite `sysdm.cpl` e pressione Enter.
+2. Vá na aba **Avançado** -> clique em **Variáveis de Ambiente...**.
+3. Procure por `__PSLockdownPolicy` tanto nas variáveis do usuário quanto nas do sistema.
+4. Se ela existir, clique em **Excluir** (ou altere seu valor para `0`).
+5. Clique em **OK**.
