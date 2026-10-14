@@ -7,7 +7,6 @@ Implementação completa em **Java** do analisador léxico (*scanner / tokenizer
 | Nome | Matrícula |
 |------|-----------|
 | Matheus Henrique Albuquerque Torres | 2020002089 |
-| _<preencher: Nome 2>_ | _<preencher>_ |
 
 **Linguagem utilizada:** Java 17+ (Maven opcional; scripts `.bat` usam apenas o JDK).
 
