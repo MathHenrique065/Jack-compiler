@@ -3,7 +3,7 @@ setlocal
 
 echo =======================================================
 echo   Enviando projeto para o GitHub:
-echo   https://github.com/MathHenrique065/compiladores-analisador-lexico
+echo   https://github.com/MathHenrique065/compiladores-jackcompiler
 echo =======================================================
 echo.
 
@@ -30,7 +30,7 @@ git branch -M main
 echo.
 echo [5/5] Configurando repositorio remoto e fazendo push...
 git remote remove origin 2>nul
-git remote add origin https://github.com/MathHenrique065/compiladores-analisador-lexico.git
+git remote add origin https://github.com/MathHenrique065/compiladores-jackcompiler.git
 
 echo.
 echo Executando 'git push -u origin main'...
