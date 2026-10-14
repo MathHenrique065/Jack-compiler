@@ -36,6 +36,10 @@ public class Token {
      */
     public String toXmlString() {
         String escapedValue = escapeXml(value);
+        // Tentativa de corrigir espacamento duplicado em stringConstant
+        if (type == TokenType.STRING_CONST && escapedValue.endsWith(" ")) {
+            return String.format("<%s> %s</%s>", type.getXmlTagName(), escapedValue.trim(), type.getXmlTagName());
+        }
         return String.format("<%s> %s </%s>", type.getXmlTagName(), escapedValue, type.getXmlTagName());
     }
 
