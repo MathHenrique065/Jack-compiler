@@ -81,6 +81,14 @@ public class JackAnalyzer {
 
         System.out.printf("  [OK] %-25s -> %-25s (%d tokens)%n",
                 fileName, outputFile.getFileName(), tokenCount);
+
+        java.util.Map<TokenType, Long> breakdown = tokenizer.getAllTokens().stream()
+                .collect(java.util.stream.Collectors.groupingBy(Token::getType,
+                        () -> new java.util.EnumMap<>(TokenType.class),
+                        java.util.stream.Collectors.counting()));
+        StringBuilder sb = new StringBuilder("       ");
+        breakdown.forEach((type, count) -> sb.append(type.getXmlTagName()).append('=').append(count).append("  "));
+        System.out.println(sb.toString().stripTrailing());
     }
 
     private static List<Path> findJackFiles(Path root) throws IOException {
