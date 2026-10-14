@@ -2,6 +2,26 @@
 
 Implementação completa em **Java** do analisador léxico (*scanner / tokenizer*) para a linguagem **Jack**, especificada no Capítulo 10 do livro *The Elements of Computing Systems* (Nand2Tetris).
 
+## 👥 Dupla
+
+| Nome | Matrícula |
+|------|-----------|
+| _<preencher: Nome 1>_ | _<preencher>_ |
+| _<preencher: Nome 2>_ | _<preencher>_ |
+
+**Linguagem utilizada:** Java 17+ (Maven opcional; scripts `.bat` usam apenas o JDK).
+
+---
+
+## 🧪 Estratégia de Testes
+
+Adotamos a estratégia **XML padrão do nand2tetris**, com duas camadas:
+
+1. **Validação contra os gabaritos oficiais (`*T.xml`)** – `LexerValidator` (`test.bat`) gera o XML de `Main.jack`, `Square.jack` e `SquareGame.jack` e compara **byte a byte** com `MainT.xml`, `SquareT.xml` e `SquareGameT.xml`. O formato segue o padrão: `<tokens>`…`</tokens>`, tags com espaços internos (`<symbol> ; </symbol>`), escapes `&lt; &gt; &quot; &amp;`, strings sem aspas e **sem token EOF**.
+2. **Testes unitários JUnit 5** (`JackTokenizerTest`, `mvn test`) – cobrem as 5 categorias, os 21 keywords, os 19 símbolos, `/` vs. comentários (`//`, `/* */`, `/** */`), contagem de linhas, e erros léxicos (inteiro > 32767, comentário não fechado, caractere inválido).
+
+Como isso garante corretude e cobertura: os arquivos oficiais exercitam todas as categorias de token e todos os tipos de comentário; a comparação exata detecta qualquer diferença de token, ordem ou formatação; os testes unitários cobrem casos de borda que os arquivos oficiais não contêm.
+
 ---
 
 ## 📁 Estrutura do Projeto
@@ -117,16 +137,3 @@ java -Dfile.encoding=UTF-8 -cp target/classes nand2tetris.lexer.JackAnalyzer tes
 ```
 
 ---
-
-## ⚠️ Nota Técnica sobre o PowerShell no seu Windows
-
-Caso o PowerShell (`pwsh`) apresente um erro de inicialização do tipo:
-`PSInvalidCastException: Cannot convert value "...python.exe" to type "System.UInt32" at SystemPolicy.GetDebugLockdownPolicy`,
-isso ocorre porque uma variável de ambiente chamada `__PSLockdownPolicy` foi incorretamente definida no Windows com o caminho do executável do Python em vez de um número (`0` ou `4`).
-
-**Como corrigir em 20 segundos:**
-1. Pressione `Win + R`, digite `sysdm.cpl` e pressione Enter.
-2. Vá na aba **Avançado** -> clique em **Variáveis de Ambiente...**.
-3. Procure por `__PSLockdownPolicy` tanto nas variáveis do usuário quanto nas do sistema.
-4. Se ela existir, clique em **Excluir** (ou altere seu valor para `0`).
-5. Clique em **OK**.
