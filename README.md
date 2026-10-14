@@ -59,6 +59,11 @@ O analisador processa o código `.jack`, elimina comentários e espaços em bran
 * Comentários de documentação (Javadoc): `/** comentário de API */`
 * O operador de divisão `/` é corretamente diferenciado de inícios de comentários (`//` ou `/*`).
 
+### Erros Léxicos:
+* Constante inteira fora do intervalo `0..32767` lança `IllegalArgumentException` (com o número da linha). Zeros à esquerda (ex.: `000001`) são aceitos.
+* Comentário de bloco não fechado (`/* ...` sem `*/`) lança `IllegalArgumentException`.
+* Caractere inválido também lança `IllegalArgumentException`.
+
 ---
 
 ## 🚀 Como Executar
