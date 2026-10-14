@@ -137,6 +137,11 @@ public class JackTokenizer {
                     i++;
                 }
                 String numStr = source.substring(start, i);
+                if (numStr.length() > 5 || Integer.parseInt(numStr) > 32767) {
+                    throw new IllegalArgumentException(
+                            String.format("Integer constant '%s' out of range 0..32767 at line %d", numStr, line)
+                    );
+                }
                 tokenList.add(new Token(TokenType.INT_CONST, numStr, line));
                 continue;
             }
