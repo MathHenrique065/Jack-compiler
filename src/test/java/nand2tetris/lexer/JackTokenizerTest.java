@@ -128,6 +128,20 @@ public class JackTokenizerTest {
     }
 
     @Test
+    @DisplayName("Should reject integer constants above 32767 but accept leading zeros")
+    void testIntegerRangeValidation() {
+        assertThrows(IllegalArgumentException.class, () -> new JackTokenizer("let a = 32768;"));
+        assertThrows(IllegalArgumentException.class, () -> new JackTokenizer("let a = 99999999999999999999;"));
+        assertEquals(1, new JackTokenizer("000001").getAllTokens().size());
+    }
+
+    @Test
+    @DisplayName("Should fail on unterminated block comments")
+    void testUnterminatedBlockComment() {
+        assertThrows(IllegalArgumentException.class, () -> new JackTokenizer("class Main { /* never closed"));
+    }
+
+    @Test
     @DisplayName("Should validate against test-files/ if present")
     void testReferenceFilesIfPresent() throws IOException {
         Path testDir = Paths.get("test-files");
