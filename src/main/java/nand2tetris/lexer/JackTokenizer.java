@@ -137,7 +137,7 @@ public class JackTokenizer {
                     i++;
                 }
                 String numStr = source.substring(start, i);
-                if (numStr.length() > 5 || Integer.parseInt(numStr) > 32767) {
+                if (new java.math.BigInteger(numStr).compareTo(java.math.BigInteger.valueOf(32767)) > 0) {
                     throw new IllegalArgumentException(
                             String.format("Integer constant '%s' out of range 0..32767 at line %d", numStr, line)
                     );
