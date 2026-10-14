@@ -102,7 +102,9 @@ public class JackTokenizer {
                     if (i + 1 < len) {
                         i += 2; // Skip closing */
                     } else {
-                        i = len; // Unterminated comment at EOF
+                        throw new IllegalArgumentException(
+                                String.format("Unterminated block comment at line %d", line)
+                        );
                     }
                     continue;
                 }
