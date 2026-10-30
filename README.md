@@ -138,3 +138,22 @@ java -Dfile.encoding=UTF-8 -cp target/classes nand2tetris.lexer.JackAnalyzer tes
 ```
 
 ---
+
+---
+
+## Analisador Sintatico (Projeto 10 - parser)
+
+O parser (`nand2tetris.parser.Parser`) consome os tokens produzidos pelo `JackTokenizer` do analisador lexico (um unico tokenizer para todo o projeto) e gera a arvore sintatica em XML.
+
+```
+src/main/java/nand2tetris/lexer/   scanner (JackTokenizer, Token, TokenType, ...)
+src/main/java/nand2tetris/parser/  parser (Parser, JackCompiler = scanner + parser, Validate)
+```
+
+Compilar e executar (gera `Nome.xml` e `NomeT.xml`):
+
+```
+javac -d out (Get-ChildItem -Recurse src/main -Filter *.java).FullName
+java -cp out nand2tetris.parser.JackCompiler <Arquivo.jack | pasta> [saida]
+java -cp out nand2tetris.parser.Validate <gerado> <referencia>
+```
