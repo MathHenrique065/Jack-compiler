@@ -2,7 +2,7 @@
 
 Implementação completa em **Java** do analisador léxico (*scanner / tokenizer*) para a linguagem **Jack**, especificada no Capítulo 10 do livro *The Elements of Computing Systems* (Nand2Tetris).
 
-## 👥 Dupla
+## 👥 Aluno
 
 | Nome | Matrícula |
 |------|-----------|
