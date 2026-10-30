@@ -1,4 +1,6 @@
-# Analisador Léxico da Linguagem Jack (Nand2Tetris - Projeto 10)
+# Compilador Jack - Analisador Léxico + Sintático (Nand2Tetris - Projeto 10)
+
+Repositório unificado: analisador léxico (`nand2tetris.lexer`) e analisador sintático (`nand2tetris.parser`), usados em conjunto. Base para as próximas unidades (Compilation Engine, Code Generator).
 
 Implementação completa em **Java** do analisador léxico (*scanner / tokenizer*) para a linguagem **Jack**, especificada no Capítulo 10 do livro *The Elements of Computing Systems* (Nand2Tetris).
 
@@ -8,7 +10,7 @@ Implementação completa em **Java** do analisador léxico (*scanner / tokenizer
 |------|-----------|
 | Matheus Henrique Albuquerque Torres | 2020002089 |
 
-**Repositório:** https://github.com/MathHenrique065/compiladores-jackcompiler
+**Repositório:** https://github.com/MathHenrique065/Jack-compiler
 
 **Linguagem utilizada:** Java 17+ (Maven opcional; scripts `.bat` usam apenas o JDK).
 
@@ -28,7 +30,7 @@ Como isso garante corretude e cobertura: os arquivos oficiais exercitam todas as
 ## 📁 Estrutura do Projeto
 
 ```text
-compiladores-jackcompiler/
+Jack-compiler/
 ├── src/
 │   ├── main/java/nand2tetris/lexer/
 │   │   ├── TokenType.java         # Enum com os 5 tipos de tokens do Jack

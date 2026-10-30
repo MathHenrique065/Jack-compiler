@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>nand2tetris</groupId>
-    <artifactId>jack-compiler-lexical</artifactId>
+    <artifactId>jack-compiler</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Jack Lexical Analyzer</name>
+    <name>Jack Compiler (lexer + parser)</name>
     <description>Lexical analyzer (scanner/tokenizer) for the Jack programming language (Nand2Tetris Project 10)</description>
 
     <properties>
@@ -51,7 +51,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>nand2tetris.lexer.JackAnalyzer</mainClass>
+                            <mainClass>nand2tetris.parser.JackCompiler</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
